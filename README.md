@@ -1,4 +1,4 @@
-Fork from github.com/chenjiandongx/ginprom
+Forked from github.com/chenjiandongx/ginprom
 
 **Important** I Changed service_http_request_size_bytes and service_http_response_size_bytes to service_http_request_size_bytes_total and service_http_response_size_bytes_total, because I don't care about the size of each request but I want to know the throughput of the service.
 
