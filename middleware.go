@@ -39,26 +39,26 @@ var (
 		}, labels,
 	)
 
-	reqSizeBytes = prometheus.NewSummaryVec(
-		prometheus.SummaryOpts{
+	reqSizeBytesTotal = prometheus.NewCounterVec(
+		prometheus.CounterOpts{
 			Namespace: namespace,
-			Name:      "http_request_size_bytes",
-			Help:      "HTTP request sizes in bytes.",
+			Name:      "http_request_size_bytes_total",
+			Help:      "Total HTTP request sizes in bytes.",
 		}, labels,
 	)
 
-	respSizeBytes = prometheus.NewSummaryVec(
-		prometheus.SummaryOpts{
+	respSizeBytesTotal = prometheus.NewCounterVec(
+		prometheus.CounterOpts{
 			Namespace: namespace,
-			Name:      "http_response_size_bytes",
-			Help:      "HTTP request sizes in bytes.",
+			Name:      "http_response_size_bytes_total",
+			Help:      "Total HTTP request sizes in bytes.",
 		}, labels,
 	)
 )
 
 // init registers the prometheus metrics
 func init() {
-	prometheus.MustRegister(uptime, reqCount, reqDuration, reqSizeBytes, respSizeBytes)
+	prometheus.MustRegister(uptime, reqCount, reqDuration, reqSizeBytesTotal, respSizeBytesTotal)
 	go recordUptime()
 }
 
@@ -167,8 +167,8 @@ func PromMiddleware(promOpts *PromOpts) gin.HandlerFunc {
 		}
 		reqCount.WithLabelValues(lvs...).Inc()
 		reqDuration.WithLabelValues(lvs...).Observe(time.Since(start).Seconds())
-		reqSizeBytes.WithLabelValues(lvs...).Observe(calcRequestSize(c.Request))
-		respSizeBytes.WithLabelValues(lvs...).Observe(float64(respSize))
+		reqSizeBytesTotal.WithLabelValues(lvs...).Add(calcRequestSize(c.Request))
+		respSizeBytesTotal.WithLabelValues(lvs...).Add(float64(respSize))
 	}
 }
 

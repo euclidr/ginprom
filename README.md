@@ -1,12 +1,18 @@
+Fork from github.com/chenjiandongx/ginprom
+
+**Important** I Changed service_http_request_size_bytes and service_http_response_size_bytes to service_http_request_size_bytes_total and service_http_response_size_bytes_total, because I don't care about the size of each request but I want to know the throughput of the service.
+
+
 <h1 align="center">📡 ginprom</h1>
 <p align="center">
     <em>Prometheus metrics exporter for Gin. Inspired by <a href="https://github.com/Depado/ginprom">Depado/ginprom.</a></em>
 </p>
 
+
 ### 🔰 Installation
 
 ```shell
-$ go get -u github.com/chenjiandongx/ginprom
+$ go get -u github.com/euclidr/ginprom
 ```
 
 ### 📝 Usage
@@ -15,7 +21,7 @@ It's easy to get started with ginprom, only a few lines of code needed.
 
 ```golang
 import (
-	"github.com/chenjiandongx/ginprom"
+	"github.com/euclidr/ginprom"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -57,8 +63,8 @@ Details about exposed Prometheus metrics.
 | service_uptime						| Counter	| HTTP service uptime. |
 | service_http_request_count_total		| Counter	| Total number of HTTP requests made. |
 | service_http_request_duration_seconds | Histogram | HTTP request latencies in seconds. |
-| service_http_request_size_bytes 		| Summary	| HTTP request sizes in bytes. |
-| service_http_response_size_bytes 		| Summary	|HTTP request sizes in bytes. |
+| service_http_request_size_bytes_total 		| Counter	| Total HTTP request sizes in bytes. |
+| service_http_response_size_bytes_total 		| Counter	| Total HTTP request sizes in bytes. |
 
 
 ### 📊 Grafana
